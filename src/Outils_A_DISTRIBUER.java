@@ -1,5 +1,3 @@
-package p15.crypto;
-
 /**
  * @author Eric Gaul, 31 mars 2011
  */
