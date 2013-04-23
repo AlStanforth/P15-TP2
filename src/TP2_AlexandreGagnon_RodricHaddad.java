@@ -1,5 +1,6 @@
-import p15.crypto;
 
 class TP2_AlexandreGagnon_RodricHaddad {
-	
+	public static void main(String[] args) {
+		
+	}
 }
