@@ -1,6 +1,9 @@
 class Num1 {
 
     public static void main(String[] args) {
+        long p = prochainPremier(9234);
+        long q = prochainPremier(5678);
+        System.out.println(p + " " + q);
     }
 
     public static boolean estPremier(long n) {
