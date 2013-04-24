@@ -1,9 +1,6 @@
 class Num1 {
 
     public static void main(String[] args) {
-        System.out.print(estPremier(11));
-        System.out.print(estPremier(12));
-        System.out.print(estPremier(31));
     }
 
     public static boolean estPremier(long n) {
@@ -17,5 +14,18 @@ class Num1 {
             }
         }
         return true;
+    }
+
+    public static long prochainPremier(long n) {
+        if (n <= 1) {
+            throw new IllegalArgumentException();
+        }
+        if (n != 2 && n % 2 == 0) {
+            n++;
+        }
+        while (!estPremier(n)) {
+            n += 2;
+        }
+        return n;
     }
 }
