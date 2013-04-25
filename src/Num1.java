@@ -1,34 +1,41 @@
 class Num1 {
 
+    public long p, q, n;
+
     public static void main(String[] args) {
-        long p = prochainPremier(9234);
-        long q = prochainPremier(5678);
-        System.out.println(p + " " + q);
+        Num1 self = new Num1();
+        System.out.format("p:%d * q:%d = n:%d%n", self.p, self.q, self.n);
+    }
+    
+    public Num1() {
+        p = prochainPremier(9234); // 9239
+        q = prochainPremier(5678); // 5683
+        n = p * q;                 // 52_505_237
     }
 
-    public static boolean estPremier(long n) {
-        if (n <= 1) {
+    public boolean estPremier(long num) {
+        if (num <= 1) {
             throw new IllegalArgumentException();
         }
-        double limite = Math.floor(Math.sqrt(n));
+        double limite = Math.floor(Math.sqrt(num));
         for (int i = 2; i <= limite; i++) {
-            if (n % i == 0) {
+            if (num % i == 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public static long prochainPremier(long n) {
-        if (n <= 1) {
+    public long prochainPremier(long num) {
+        if (num <= 1) {
             throw new IllegalArgumentException();
         }
-        if (n != 2 && n % 2 == 0) {
-            n++;
+        if (num != 2 && num % 2 == 0) {
+            num++;
         }
-        while (!estPremier(n)) {
-            n += 2;
+        while (!estPremier(num)) {
+            num += 2;
         }
-        return n;
+        return num;
     }
 }
