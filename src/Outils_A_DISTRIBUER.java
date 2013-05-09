@@ -3,7 +3,7 @@
  */
 public class Outils_A_DISTRIBUER {
 
-    public static final int LONGUEUR_MORCEAU = 1;
+    public static final int LONGUEUR_MORCEAU = 4;
     public static final int LONGUEUR_CODE_1_CAR = 2;
 
     /**
