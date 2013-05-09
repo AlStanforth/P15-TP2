@@ -1,5 +1,5 @@
 class Num3 {
-	
+
 	public static long e, d, phiN;
 
 	static {

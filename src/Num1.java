@@ -14,7 +14,7 @@ class Num1 {
 
     public static boolean estPremier(long num) {
         if (num <= 1) throw new IllegalArgumentException();
-        
+
         double limite = Math.floor(Math.sqrt(num));
         for (int i = 2; i <= limite; i++) {
             if (num % i == 0) {
@@ -26,7 +26,7 @@ class Num1 {
 
     public static long prochainPremier(long num) {
         if (num <= 1) throw new IllegalArgumentException();
-        
+
         if (num != 2 && num % 2 == 0) {
             num++;
         }
