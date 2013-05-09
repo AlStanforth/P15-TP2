@@ -1,7 +1,9 @@
 class Num4 {
 
 	public static void main(String[] args) {
-		System.out.println(exponentiationRapide(3, 11, 5));
+		long a = 256, b = 450, m = 777;
+        long c = exponentiationRapide(a, b, m);
+        System.out.format("%d ^ %d == %d (mod %d)%n", a, b, c, m);
 	}
 
 	public static long exponentiationRapide(long a, long b, long m) {
