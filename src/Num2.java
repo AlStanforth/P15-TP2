@@ -21,6 +21,6 @@ class Num2 {
             x0 = x1; y0 = y1;
             x1 = xTemp; y1 = yTemp;
         }
-        return new long[] {x, x0, y0};
+        return new long[] {x, x0, y0}; //pgcd, x, y
     }
 }
