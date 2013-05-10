@@ -3,62 +3,51 @@
  * @author Rodric Haddad
  */
 
-
 class GagnonHaddadTP2 {
 
     public static void main(String[] args) {
-        test1();
-        test2();
-        test3();
-        test4();
-
-        long p = 9239, q = 5683;
+        // 1a
+        long p = prochainPremier(9239);
+        long q = prochainPremier(5683);
+        if (estPremier(p) && estPremier(q)) {
+            System.out.println("1a) p et q sont premiers.");
+        }
+        // 1b
         long n = p * q;
-        System.out.format("p:%d * q:%d = n:%d%n", p, q, n);
+        System.out.format("1b) p:%d * q:%d = n:%d%n", p, q, n);
+        // 2
+        long a = 662, b = 414;
+        long[] cl = euclideEtendu(a, b);
+        System.out.format("2) %d(%d) + %d(%d) = %d%n", cl[1], a, cl[2], b, cl[0]);
+        // ((d*e) % phiN)
+        // 3
         long phiN = phi(n);
         long e = trouverE(1139, phiN);
         long d = inverseModulo(e, phiN);
-        System.out.println(((d*e) % phiN));
-
+        a = 5;
+        long m = 11;
+        System.out.format("3) %d * %d == %d (mod %d)%n", a, inverseModulo(a, m), euclideEtendu(a, m)[0], m);
+        // 4
+        a = 256; b = 450; m = 777;
+        long c = exponentiationRapide(a, b, m);
+        System.out.format("4) %d ^ %d == %d (mod %d)%n", a, b, c, m);
+        // 5
         long[] signatureProf = {
             76310066, 2596885, 1136574, 15355199, 78110831,
             63789364, 24210018, 33518696, 41054765, 21115496
         };
         long nProf = 81072007, eProf = 9001;
-        System.out.println(verifSignature(signatureProf, nProf, eProf));
-
+        System.out.println("5) " + verifSignature(signatureProf, nProf, eProf));
+        // 6
         String notreMsg = "CETTE PHRASE EST COURTOISE";
         long[] msgCrypter = crypter(notreMsg, nProf, eProf);
-        System.out.println("Notre Message : " + notreMsg);
-        System.out.print("Crypter : { " + msgCrypter[0]);
+        System.out.println("6) Notre Message : " + notreMsg);
+        System.out.print("6) Crypter : { " + msgCrypter[0]);
         for (int i = 1; i < msgCrypter.length; i++) {
             System.out.print(", " + msgCrypter[i]);
         }
         System.out.print(" }\n");
     }
-
-    public static void test1() {
-        // TODO Test estPremier() and prochainPremier()
-    }
-
-    public static void test2() {
-        long a = 662, b = 414;
-        long[] cl = euclideEtendu(a, b);
-        System.out.format("%d(%d) + %d(%d) = %d%n", cl[1], a, cl[2], b, cl[0]);
-    }
-
-    public static void test3() {
-        long a = 5, m = 11;
-        System.out.format("%d * %d == %d (mod %d)%n", a, inverseModulo(a, m), euclideEtendu(a, m)[0], m);
-    }
-
-    public static void test4() {
-        long a = 256, b = 450, m = 777;
-        long c = exponentiationRapide(a, b, m);
-        System.out.format("%d ^ %d == %d (mod %d)%n", a, b, c, m);
-    }
-
-
 
     public static boolean estPremier(long num) {
         if (num <= 1) throw new IllegalArgumentException();
