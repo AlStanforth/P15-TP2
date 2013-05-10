@@ -3,24 +3,62 @@
  * @author Rodric Haddad
  */
 
-class TP2_AlexandreGagnon_RodricHaddad {
-    public static void main(String[] args) {
 
-    }
-}
-class Num1 {
-
-    public static long p, q, n;
-
-    static {
-        p = 9239; //Num1.prochainPremier(9234);
-        q = 5683; //Num1.prochainPremier(5678);
-        n = p * q; // 52_505_237
-    }
+class GagnonHaddadTP2 {
 
     public static void main(String[] args) {
-        System.out.format("p:%d * q:%d = n:%d%n", Num1.p, Num1.q, Num1.n);
+        test1();
+        test2();
+        test3();
+        test4();
+
+        long p = 9239, q = 5683;
+        long n = p * q;
+        System.out.format("p:%d * q:%d = n:%d%n", p, q, n);
+        long phiN = phi(n);
+        long e = trouverE(1139, phiN);
+        long d = inverseModulo(e, phiN);
+        System.out.println(((d*e) % phiN));
+
+        long[] signatureProf = {
+            76310066, 2596885, 1136574, 15355199, 78110831,
+            63789364, 24210018, 33518696, 41054765, 21115496
+        };
+        long nProf = 81072007, eProf = 9001;
+        System.out.println(verifSignature(signatureProf, nProf, eProf));
+
+        String notreMsg = "CETTE PHRASE EST COURTOISE";
+        long[] msgCrypter = crypter(notreMsg, nProf, eProf);
+        System.out.println("Notre Message : " + notreMsg);
+        System.out.print("Crypter : { " + msgCrypter[0]);
+        for (int i = 1; i < msgCrypter.length; i++) {
+            System.out.print(", " + msgCrypter[i]);
+        }
+        System.out.print(" }\n");
     }
+
+    public static void test1() {
+        // TODO Test estPremier() and prochainPremier()
+    }
+
+    public static void test2() {
+        long a = 662, b = 414;
+        long[] cl = euclideEtendu(a, b);
+        System.out.format("%d(%d) + %d(%d) = %d%n", cl[1], a, cl[2], b, cl[0]);
+    }
+
+    public static void test3() {
+        long a = 5, m = 11;
+        System.out.format("%d * %d == %d (mod %d)%n", a, inverseModulo(a, m), euclideEtendu(a, m)[0], m);
+    }
+
+    public static void test4() {
+        long a = 256, b = 450, m = 777;
+        long c = exponentiationRapide(a, b, m);
+        System.out.format("%d ^ %d == %d (mod %d)%n", a, b, c, m);
+    }
+
+
 
     public static boolean estPremier(long num) {
         if (num <= 1) throw new IllegalArgumentException();
@@ -40,18 +78,10 @@ class Num1 {
         if (num != 2 && num % 2 == 0) {
             num++;
         }
-        while (!Num1.estPremier(num)) {
+        while (!estPremier(num)) {
             num += 2;
         }
         return num;
-    }
-}
-class Num2 {
-
-    public static void main(String[] args) {
-        long a = 662, b = 414;
-        long[] cl = Num2.euclideEtendu(a, b);
-        System.out.format("%d(%d) + %d(%d) = %d%n", cl[1], a, cl[2], b, cl[0]);
     }
 
     public static long[] euclideEtendu(long x, long y) {
@@ -71,27 +101,12 @@ class Num2 {
         }
         return new long[] {x, x0, y0}; //pgcd, x, y
     }
-}
-class Num3 {
-
-    public static long e, d, phiN;
-
-    static {
-        phiN = 52490316; //phi(Num1.n);
-        e = 1139; //trouverE(1139, phiN);
-        d = 4838879; //inverseModulo(e, phiN);
-        //System.out.println(((d*e) % phiN));
-    }
-
-    public static void main(String[] args) {
-        long a = 5, m = 11;
-        System.out.format("%d * %d == %d (mod %d)%n", a, inverseModulo(a, m), Num2.euclideEtendu(a, m)[0], m);
-    }
 
     public static long inverseModulo(long a, long m) {
-        if (a <= 1 || m <= 1 || Num2.euclideEtendu(a, m)[0] != 1) throw new IllegalArgumentException();
+        long[] euclide = euclideEtendu(a, m);
+        if (a <= 1 || m <= 1 || euclide[0] != 1) throw new IllegalArgumentException();
 
-        long x0 = Num2.euclideEtendu(a, m)[1];
+        long x0 = euclide[1];
         while (x0 < 0) {
             x0 += m;
         }
@@ -101,7 +116,7 @@ class Num3 {
     public static long phi(long n) {
         long nbPremRelatif = 1; //on compte le `1`
         for(int i = 2; i < n; i++) {
-            if (Num2.euclideEtendu(n, i)[0] == 1) {
+            if (euclideEtendu(n, i)[0] == 1) {
                 nbPremRelatif++;
             }
         }
@@ -111,18 +126,10 @@ class Num3 {
     public static long trouverE(long s, long phiN) {
         if (s <= 1 || phiN <= 1) throw new IllegalArgumentException();
 
-        while (Num2.euclideEtendu(phiN, s)[0] != 1) {
+        while (euclideEtendu(phiN, s)[0] != 1) {
             s++;
         }
         return s;
-    }
-}
-class Num4 {
-
-    public static void main(String[] args) {
-        long a = 256, b = 450, m = 777;
-        long c = exponentiationRapide(a, b, m);
-        System.out.format("%d ^ %d == %d (mod %d)%n", a, b, c, m);
     }
 
     public static long exponentiationRapide(long a, long b, long m) {
@@ -142,59 +149,21 @@ class Num4 {
 
          return produit;
     }
-}
-class Num5 {
 
-    public static long[] signatureProf = {
-        76310066, 2596885, 1136574, 15355199, 78110831,
-        63789364, 24210018, 33518696, 41054765, 21115496
-    };
-
-    public static long
-        nProf = 81072007,
-        eProf = 9001;
-
-    public static String signatureDecoded;
-
-
-    static {
-        long[] signatureDecrypt = new long[Num5.signatureProf.length];
-        for (int i = 0; i < Num5.signatureProf.length; i++) {
-            signatureDecrypt[i] = Num4.exponentiationRapide(Num5.signatureProf[i], eProf, nProf);
+    public static String verifSignature(long[] signature, long n, long e) {
+        long[] signatureDecrypt = new long[signature.length];
+        for (int i = 0; i < signature.length; i++) {
+            signatureDecrypt[i] = exponentiationRapide(signature[i], e, n);
         }
-
-        signatureDecoded = Outils_A_DISTRIBUER.decoder(signatureDecrypt);
+        return Outils_A_DISTRIBUER.decoder(signatureDecrypt);
     }
 
-    public static void main(String[] args) {
-        System.out.println(signatureDecoded);
-    }
-
-}
-class Num6 {
-
-    public static long
-        nProf = Num5.nProf,
-        eProf = Num5.eProf;
-
-    public static String notreMsg = "CETTE PHRASE EST COURTOISE";
-    public static long[]
-        msgEncoded = Outils_A_DISTRIBUER.encoder(notreMsg),
-        msgCrypter = new long[msgEncoded.length];
-
-    static {
-        for (int i = 0; i < msgEncoded.length; i++) {
-            msgCrypter[i] = Num4.exponentiationRapide(msgEncoded[i], eProf, nProf);
+    public static long[] crypter(String msg, long n, long e) {
+        long[] msgEncode = Outils_A_DISTRIBUER.encoder(msg);
+        long[] msgCrypt = new long[msgEncode.length];
+        for (int i = 0; i < msgEncode.length; i++) {
+            msgCrypt[i] = exponentiationRapide(msgEncode[i], e, n);
         }
+        return msgCrypt;
     }
-
-    public static void main(String[] args) {
-        System.out.println("Notre Message : " + notreMsg);
-        System.out.print("Crypter : { " + msgCrypter[0]);
-        for (int i = 1; i < msgCrypter.length; i++) {
-            System.out.print(", " + msgCrypter[i]);
-        }
-        System.out.print(" }\n");
-    }
-
 }
