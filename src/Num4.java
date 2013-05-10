@@ -12,13 +12,13 @@ class Num4 {
          long produit = 1, puissance = a, quotient = b;
 
          do {
-            if (quotient % 2 != 0) {
-                produit = produit * puissance;
-                produit = produit % m;
-            }
-            puissance = puissance * puissance;
-            puissance = puissance % m;
-            quotient = quotient / 2;
+             if (quotient % 2 != 0) {
+                 produit = produit * puissance;
+                 produit = produit % m;
+             }
+             puissance = puissance * puissance;
+             puissance = puissance % m;
+             quotient = quotient / 2;
          } while(quotient != 0);
 
          return produit;
