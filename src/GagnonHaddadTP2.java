@@ -6,43 +6,79 @@
 class GagnonHaddadTP2 {
 
     public static void main(String[] args) {
-        // 1a
+        // 1
+        echoHeader("Question 1");
         long p = prochainPremier(9239);
         long q = prochainPremier(5683);
-        if (estPremier(p) && estPremier(q)) {
-            System.out.println("1a) p et q sont premiers.");
-        }
-        // 1b
         long n = p * q;
-        System.out.format("1b) p:%d * q:%d = n:%d%n", p, q, n);
+        System.out.format("p:%d * q:%d = n:%d%n", p, q, n);
+        if (estPremier(p) && estPremier(q)) {
+            echo("p et q sont premiers");
+        } else {
+            echoErr("p et/ou q ne sont pas premiers");
+        }
+        if (n > 27272727) {
+            echo("n est superieur a 27272727");
+        } else {
+            echoErr("n n'est pas superieur a 27272727");
+        }
+
         // 2
+        echoHeader("Question 2");
         long a = 662, b = 414;
         long[] cl = euclideEtendu(a, b);
-        System.out.format("2) %d(%d) + %d(%d) = %d%n", cl[1], a, cl[2], b, cl[0]);
+        System.out.format("Test avec %d et %d: %d(%d) + %d(%d) = %d%n", a, b, cl[1], a, cl[2], b, cl[0]);
+        if ((a * cl[1] + b * cl[2]) == cl[0]) {
+            echo("Euclide Etendu marche");
+        } else {
+            echoErr("Euclide Etendu ne marche pas");
+        }
         // ((d*e) % phiN)
+
         // 3
+        echoHeader("Question 3");
         long phiN = phi(n);
         long e = trouverE(1139, phiN);
         long d = inverseModulo(e, phiN);
         a = 5;
         long m = 11;
-        System.out.format("3) %d * %d == %d (mod %d)%n", a, inverseModulo(a, m), euclideEtendu(a, m)[0], m);
+        echo("Le phi(n) trouvee est : " + phiN);
+        echo("Le e trouvee est : " + e);
+        echo("Le d trouvee est : " + d);
+        System.out.format("%d * %d == %d (mod %d)%n", d, e, 1, phiN);
+        if ( ((d*e) % phiN) == 1 ) {
+            echo("Le d est bon");
+        } else {
+            echoErr("Le d n'est pas bon");
+        }
+
         // 4
-        a = 256; b = 450; m = 777;
+        echoHeader("Question 4");
+        //a = 256; b = 450; m = 777; trop gros pour le Math.pow
+        a = 3; b = 11; m = 5;
         long c = exponentiationRapide(a, b, m);
-        System.out.format("4) %d ^ %d == %d (mod %d)%n", a, b, c, m);
+        System.out.format("Test expo. rapide: %d ^ %d == %d (mod %d)%n", a, b, c, m);
+        if (Math.pow(a, b) % m == c) {
+            echo("L'exponentiation rapide marche");
+        } else {
+            echoErr("L'exponentiation rapide ne marche pas");
+        }
+
         // 5
+        echoHeader("Question 5");
         long[] signatureProf = {
             76310066, 2596885, 1136574, 15355199, 78110831,
             63789364, 24210018, 33518696, 41054765, 21115496
         };
         long nProf = 81072007, eProf = 9001;
-        System.out.println("5) " + verifSignature(signatureProf, nProf, eProf));
+        echo("Equipe 19, signature/message du prof: " + verifSignature(signatureProf, nProf, eProf));
+
         // 6
+        echoHeader("Question 6");
         String notreMsg = "CETTE PHRASE EST COURTOISE";
         long[] msgCrypter = crypter(notreMsg, nProf, eProf);
-        System.out.println("6) Notre Message : " + notreMsg);
-        System.out.print("6) Crypter : { " + msgCrypter[0]);
+        echo("Notre message secret : " + notreMsg);
+        System.out.print("Message crypte avec la cle publique du prof :\n{ " + msgCrypter[0]);
         for (int i = 1; i < msgCrypter.length; i++) {
             System.out.print(", " + msgCrypter[i]);
         }
@@ -154,5 +190,18 @@ class GagnonHaddadTP2 {
             msgCrypt[i] = exponentiationRapide(msgEncode[i], e, n);
         }
         return msgCrypt;
+    }
+
+    //aide
+    public static void echo(String msg) {
+        System.out.println(msg);
+    }
+
+    public static void echoHeader(String msg) {
+        echo("\n========== " + msg + " ==========");
+    }
+
+    public static void echoErr(String msg) {
+        echo("!! " + msg + " !!");
     }
 }
